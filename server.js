@@ -13,8 +13,8 @@ const API_KEY = process.env.GEMINI_API_KEY;
 // Rota para Texto e Áudio (TTS)
 app.post('/api/generate', async (req, res) => {
     try {
-        // Mudamos para v1 e gemini-1.5-flash para maior estabilidade
-        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // No seu server.js, altere APENAS a linha da URL para:
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
         
         const response = await fetch(url, {
             method: 'POST',
