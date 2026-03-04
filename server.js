@@ -10,47 +10,37 @@ app.use(express.json());
 
 const API_KEY = process.env.GEMINI_API_KEY;
 
-// Rota para Texto e Áudio (TTS)
+// Rota para Texto (Gemini 1.5 Flash - Versão Estável v1)
 app.post('/api/generate', async (req, res) => {
     try {
-        // No seu server.js, altere APENAS a linha da URL para:
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-        
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(req.body)
         });
-
         const data = await response.json();
         res.status(response.status).json(data);
     } catch (error) {
-        console.error("Erro na rota generate:", error);
-        res.status(500).json({ error: "Erro interno no servidor" });
+        res.status(500).json({ error: "Erro na conexão com Google v1" });
     }
 });
 
-// Rota para Imagens
+// Rota para Imagem (Imagen 3 - Versão v1beta)
 app.post('/api/predict', async (req, res) => {
     try {
-        // Usando v1beta para Imagen, que é o padrão atual
         const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${API_KEY}`;
-        
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(req.body)
         });
-
         const data = await response.json();
         res.status(response.status).json(data);
     } catch (error) {
-        console.error("Erro na rota predict:", error);
-        res.status(500).json({ error: "Erro ao processar imagem" });
+        res.status(500).json({ error: "Erro na conexão com Google v1beta" });
     }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Gläub+ Backend rodando na porta ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Servidor Ativo`));
