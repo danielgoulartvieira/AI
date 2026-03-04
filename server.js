@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Carrega a chave que está configurada no painel do Render
 dotenv.config({ path: 'ai.env' });
 
 const app = express();
@@ -12,10 +11,10 @@ app.use(express.json());
 const API_KEY = process.env.GEMINI_API_KEY;
 
 // Rota para Texto e Áudio (TTS)
-// Usando o modelo 2.0 Flash que suporta saída de áudio nativa
 app.post('/api/generate', async (req, res) => {
     try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${API_KEY}`;
+        // Mudamos para v1 e gemini-1.5-flash para maior estabilidade
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
         
         const response = await fetch(url, {
             method: 'POST',
@@ -31,9 +30,10 @@ app.post('/api/generate', async (req, res) => {
     }
 });
 
-// Rota para Imagens (Imagen 3)
+// Rota para Imagens
 app.post('/api/predict', async (req, res) => {
     try {
+        // Usando v1beta para Imagen, que é o padrão atual
         const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${API_KEY}`;
         
         const response = await fetch(url, {
