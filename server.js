@@ -10,7 +10,7 @@ app.use(express.json());
 
 const API_KEY = process.env.GEMINI_API_KEY;
 
-// Rota para Texto (Gemini 1.5 Flash - Versão Estável v1)
+// Rota de Texto e Mensagem (v1 Estável)
 app.post('/api/generate', async (req, res) => {
     try {
         const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -22,11 +22,11 @@ app.post('/api/generate', async (req, res) => {
         const data = await response.json();
         res.status(response.status).json(data);
     } catch (error) {
-        res.status(500).json({ error: "Erro na conexão com Google v1" });
+        res.status(500).json({ error: "Erro na conexão com Google" });
     }
 });
 
-// Rota para Imagem (Imagen 3 - Versão v1beta)
+// Rota de Imagem (v1beta Necessária para Imagen 3)
 app.post('/api/predict', async (req, res) => {
     try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${API_KEY}`;
@@ -38,9 +38,9 @@ app.post('/api/predict', async (req, res) => {
         const data = await response.json();
         res.status(response.status).json(data);
     } catch (error) {
-        res.status(500).json({ error: "Erro na conexão com Google v1beta" });
+        res.status(500).json({ error: "Erro ao gerar imagem" });
     }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor Ativo`));
+app.listen(PORT, () => console.log(`🚀 Servidor Gläub+ Ativo`));
